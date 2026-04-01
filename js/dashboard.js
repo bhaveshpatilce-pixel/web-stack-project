@@ -48,6 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         completedTasksCount: document.getElementById("completedTasksCount"),
         pendingTasksCount: document.getElementById("pendingTasksCount"),
         completionRate: document.getElementById("completionRate"),
+        totalTasksMeta: document.getElementById("totalTasksMeta"),
+        completedTasksMeta: document.getElementById("completedTasksMeta"),
+        pendingTasksMeta: document.getElementById("pendingTasksMeta"),
+        completionRateMeta: document.getElementById("completionRateMeta"),
+        weatherUpdatedAt: document.getElementById("weatherUpdatedAt"),
     };
 
     if (ui.userNameDisplay) ui.userNameDisplay.textContent = loggedInUser.fullName;
@@ -150,6 +155,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         ui.completedTasksCount.textContent = completed;
         ui.pendingTasksCount.textContent = pending;
         ui.completionRate.textContent = `${rate}%`;
+        if (ui.totalTasksMeta) ui.totalTasksMeta.textContent = `${total} tracked right now`;
+        if (ui.completedTasksMeta) ui.completedTasksMeta.textContent = `${completed} done so far`;
+        if (ui.pendingTasksMeta) ui.pendingTasksMeta.textContent = `${pending} remaining now`;
+        if (ui.completionRateMeta) ui.completionRateMeta.textContent = rate >= 70 ? "Great momentum" : "Keep the streak going";
     };
 
     const renderTasks = () => {
@@ -223,13 +232,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             const weatherData = await weatherRes.json();
             const current = weatherData.current;
             ui.weatherContent.innerHTML = `
-                <p><strong>${loc.name}</strong>, ${loc.country || ""}</p>
-                <p>Temperature: ${current.temperature_2m}°C</p>
-                <p>Wind: ${current.wind_speed_10m} km/h</p>
-                <p>Code: ${current.weather_code}</p>
+                <div class="weather-row"><span class="weather-label">Location</span><span class="weather-value">${loc.name}, ${loc.country || ""}</span></div>
+                <div class="weather-row"><span class="weather-label">Temperature</span><span class="weather-value">${current.temperature_2m}°C</span></div>
+                <div class="weather-row"><span class="weather-label">Wind</span><span class="weather-value">${current.wind_speed_10m} km/h</span></div>
+                <div class="weather-row"><span class="weather-label">Condition Code</span><span class="weather-value">${current.weather_code}</span></div>
             `;
+            if (ui.weatherUpdatedAt) {
+                ui.weatherUpdatedAt.textContent = `Updated ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+            }
         } catch (_error) {
             ui.weatherContent.innerHTML = "<p>Unable to load weather right now.</p>";
+            if (ui.weatherUpdatedAt) ui.weatherUpdatedAt.textContent = "Weather unavailable";
         }
     };
 
@@ -379,7 +392,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (notesSaveTimer) clearTimeout(notesSaveTimer);
         notesSaveTimer = setTimeout(async () => {
             await saveProfile({ quickNotes: state.profile.quickNotes }, true);
-            ui.notesSaveStatus.textContent = "Saved";
+            ui.notesSaveStatus.textContent = "Saved just now";
         }, 600);
     });
 
