@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | TaskMaster Pro</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,49 +13,42 @@
         <div class="auth-card">
             <div class="auth-header">
                 <h1>TaskMaster Pro</h1>
-                <p>Create your free account today.</p>
+                <p>Create your account and start managing tasks.</p>
             </div>
-            
+
             <form id="signupForm">
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" placeholder="John Doe" required>
-                    <span class="error-message">FullName cannot be empty</span>
+                    <input type="text" id="fullName" placeholder="Enter your full name" required>
                 </div>
 
-                <div class="form-group" id="signupEmailGroup">
+                <div class="form-group">
                     <label for="signupEmail">Email Address</label>
-                    <input type="email" id="signupEmail" placeholder="john@example.com" required>
-                    <span class="error-message" id="emailError">Please enter a valid email</span>
-                </div>
-                
-                <div class="form-group" id="signupPasswordGroup">
-                    <label for="signupPassword">Password (Min. 6 chars)</label>
-                    <input type="password" id="signupPassword" placeholder="••••••••" required minlength="6">
-                    <span class="error-message">Password must be at least 6 characters</span>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
                 </div>
 
-                <div class="form-group" id="confirmPasswordGroup">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" id="confirmPassword" placeholder="••••••••" required minlength="6">
-                    <span class="error-message">Passwords do not match</span>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="At least 6 characters" required>
                 </div>
-                
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Repeat your password" required>
+                </div>
+
                 <button type="submit" class="auth-btn">
                     <i class="fas fa-user-plus"></i> Sign Up
                 </button>
             </form>
-            
+
             <div class="auth-footer">
                 Already have an account? <a href="index.html">Login</a>
             </div>
         </div>
     </div>
 
-    <!-- Toast Container -->
     <div id="toastContainer" class="toast-container"></div>
-
-    <!-- Auth JS -->
     <script src="js/auth.js"></script>
 </body>
 </html>
