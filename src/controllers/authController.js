@@ -101,4 +101,57 @@ const me = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, me };
+const updateProfile = async (req, res) => {
+  try {
+    const { quickNotes, preferences, pomodoro } = req.body;
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (typeof quickNotes === "string") {
+      user.quickNotes = quickNotes;
+    }
+
+    if (preferences && typeof preferences === "object") {
+      if (typeof preferences.theme === "string") {
+        user.preferences.theme = preferences.theme === "light" ? "light" : "dark";
+      }
+      if (typeof preferences.weatherCity === "string") {
+        user.preferences.weatherCity = preferences.weatherCity.trim() || user.preferences.weatherCity;
+      }
+    }
+
+    if (pomodoro && typeof pomodoro === "object") {
+      if (typeof pomodoro.duration === "number" && pomodoro.duration > 0) {
+        user.pomodoro.duration = Math.floor(pomodoro.duration);
+      }
+      if (typeof pomodoro.remainingSeconds === "number" && pomodoro.remainingSeconds >= 0) {
+        user.pomodoro.remainingSeconds = Math.floor(pomodoro.remainingSeconds);
+      }
+      if (typeof pomodoro.isRunning === "boolean") {
+        user.pomodoro.isRunning = pomodoro.isRunning;
+      }
+      if (typeof pomodoro.lastUpdatedAt === "string" || pomodoro.lastUpdatedAt instanceof Date) {
+        user.pomodoro.lastUpdatedAt = new Date(pomodoro.lastUpdatedAt);
+      }
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile updated",
+      profile: {
+        quickNotes: user.quickNotes,
+        preferences: user.preferences,
+        pomodoro: user.pomodoro,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { signup, login, me, updateProfile };

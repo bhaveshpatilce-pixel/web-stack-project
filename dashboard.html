@@ -12,55 +12,112 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div class="background-blur bg-one"></div>
+    <div class="background-blur bg-two"></div>
     <div class="dashboard-container">
-        <!-- Navigation -->
-        <nav class="navbar">
+        <header class="topbar glass-card">
             <div class="nav-logo">
-                <h2>TaskMaster <span style="font-weight: 300;">PRO</span></h2>
+                <h2>TaskMaster <span>PRO</span></h2>
+                <p>Your focus command center</p>
             </div>
             <div class="nav-user-actions">
+                <span class="welcome-text">Welcome, <span id="userNameDisplay">User</span></span>
                 <button id="themeToggle" class="theme-toggle" title="Toggle Dark/Light Mode">
                     <i class="fas fa-moon"></i>
                 </button>
-                <span class="welcome-text">Welcome, <span id="userNameDisplay">User</span></span>
                 <button id="logoutBtn" class="logout-btn">
                     <i class="fas fa-right-from-bracket"></i> Logout
                 </button>
             </div>
-        </nav>
+        </header>
 
-        <!-- Task Controls -->
-        <section class="controls-section">
-            <div class="search-sort-group">
-                <div class="search-input-wrapper">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Search tasks...">
-                </div>
-                <div class="filter-btn-group">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="pending">Pending</button>
-                    <button class="filter-btn" data-filter="completed">Completed</button>
-                </div>
-                <select id="sortBy" style="width: auto;">
-                    <option value="newest">Newest First</option>
-                    <option value="oldest">Oldest First</option>
-                    <option value="alphabetical">A-Z</option>
-                </select>
-            </div>
-            <button id="openAddTaskModal" class="add-task-btn">
-                <i class="fas fa-plus"></i> New Task
-            </button>
+        <section class="stats-row">
+            <article class="glass-card stat-card">
+                <p>Total Tasks</p>
+                <h3 id="totalTasksCount">0</h3>
+            </article>
+            <article class="glass-card stat-card">
+                <p>Completed</p>
+                <h3 id="completedTasksCount">0</h3>
+            </article>
+            <article class="glass-card stat-card">
+                <p>Pending</p>
+                <h3 id="pendingTasksCount">0</h3>
+            </article>
+            <article class="glass-card stat-card">
+                <p>Completion Rate</p>
+                <h3 id="completionRate">0%</h3>
+            </article>
         </section>
 
-        <!-- Task Grid -->
-        <div id="taskGrid" class="task-grid">
-            <!-- Empty State (Fallback) -->
-            <div class="empty-state">
-                <i class="fas fa-tasks"></i>
-                <h3>No tasks found</h3>
-                <p>Start organizing your day by adding a new task!</p>
-            </div>
-        </div>
+        <main class="dashboard-layout">
+            <section class="main-column">
+                <section class="controls-section glass-card">
+                    <div class="search-sort-group">
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" placeholder="Search tasks...">
+                        </div>
+                        <div class="filter-btn-group">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="pending">Pending</button>
+                            <button class="filter-btn" data-filter="completed">Completed</button>
+                        </div>
+                        <select id="sortBy">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="alphabetical">A-Z</option>
+                        </select>
+                    </div>
+                    <button id="openAddTaskModal" class="add-task-btn">
+                        <i class="fas fa-plus"></i> New Task
+                    </button>
+                </section>
+
+                <section id="taskGrid" class="task-grid">
+                    <div class="empty-state glass-card">
+                        <i class="fas fa-tasks"></i>
+                        <h3>No tasks found</h3>
+                        <p>Start organizing your day by adding a new task.</p>
+                    </div>
+                </section>
+            </section>
+
+            <aside class="side-column">
+                <section class="glass-card widget-card">
+                    <div class="widget-header">
+                        <h3><i class="fas fa-cloud-sun"></i> Weather</h3>
+                    </div>
+                    <div class="weather-controls">
+                        <input type="text" id="weatherCityInput" placeholder="Enter city (e.g. London)">
+                        <button id="saveCityBtn" class="mini-btn">Save City</button>
+                    </div>
+                    <div id="weatherContent" class="widget-content">
+                        <p>Weather will appear here.</p>
+                    </div>
+                </section>
+
+                <section class="glass-card widget-card">
+                    <div class="widget-header">
+                        <h3><i class="fas fa-note-sticky"></i> Quick Notes</h3>
+                        <span id="notesSaveStatus" class="save-status">Saved</span>
+                    </div>
+                    <textarea id="quickNotesInput" rows="6" placeholder="Capture ideas, reminders, and priorities..."></textarea>
+                </section>
+
+                <section class="glass-card widget-card">
+                    <div class="widget-header">
+                        <h3><i class="fas fa-hourglass-half"></i> Pomodoro</h3>
+                    </div>
+                    <div class="pomodoro-display" id="pomodoroDisplay">25:00</div>
+                    <div class="pomodoro-controls">
+                        <button id="pomodoroStartBtn" class="mini-btn">Start</button>
+                        <button id="pomodoroPauseBtn" class="mini-btn">Pause</button>
+                        <button id="pomodoroResetBtn" class="mini-btn danger">Reset</button>
+                    </div>
+                </section>
+            </aside>
+        </main>
     </div>
 
     <!-- Add/Edit Task Modal -->
